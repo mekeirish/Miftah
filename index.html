@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Miftah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; /* Évite la sélection de texte parasite lors du long press sur mobile */
+        }
+        input, button { user-select: text; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
+<meta property="og:title" content="Miftah">
+<meta name="twitter:title" content="Miftah">
+<meta name="application-name" content="Miftah">
+<meta name="apple-mobile-web-app-title" content="Miftah">
+<meta name="description" content="Vos clés">
+<meta property="og:description" content="Vos clés">
+<meta name="twitter:description" content="Vos clés">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon.png">
+<meta property="og:image" content="https://mekeirish.github.io/Miftah/icon.png">
+<meta name="twitter:image" content="https://mekeirish.github.io/Miftah/icon.png">
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://mekeirish.github.io/Miftah/">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#fbe64d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icon.png">
+<link rel="apple-touch-startup-image" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1320x2868.png">
+<link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1206x2622.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1290x2796.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1179x2556.png">
+<link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1284x2778.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1170x2532.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1242x2688.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-828x1792.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1125x2436.png">
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="./splash-1242x2208.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-750x1334.png">
+<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="./splash-640x1136.png">
+</head>
+<body class="min-h-screen flex flex-col items-center p-3 sm:p-6">
+
+    <!-- En-tête Miftah (Long press pour activer le mode édition) -->
+    <div id="headerBrand" class="w-full max-w-3xl bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-xl mb-3 flex flex-col sm:flex-row items-center justify-between gap-3 cursor-pointer select-none transition-colors hover:border-slate-700" title="Maintenez appuyé pour activer/désactiver le mode édition">
+        <div class="flex items-center gap-3 text-center sm:text-left">
+            <div class="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                </svg>
+            </div>
+            <div>
+                <div class="flex items-center gap-2 justify-center sm:justify-start">
+                    <h1 class="text-base sm:text-lg font-bold text-white tracking-tight">Miftah</h1>
+                    <span id="editBadge" class="hidden text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold animate-pulse">Mode Édition</span>
+                </div>
+                <p id="subTitle" class="text-xs text-slate-400">Site • Identifiant • Code</p>
+            </div>
+        </div>
+
+        <div class="w-full sm:w-auto flex flex-wrap items-center justify-center gap-2" onclick="event.stopPropagation()">
+            <!-- Bouton Import CSV -->
+            <label for="csvInput" class="cursor-pointer bg-indigo-600 hover:bg-indigo-500 active:scale-95 transition-all text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-xl shadow-lg shadow-indigo-500/20 flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                </svg>
+                <span>CSV</span>
+            </label>
+            <input type="file" id="csvInput" accept=".csv,text/csv" class="hidden">
+
+            <!-- Bouton Export JSON -->
+            <button id="exportJsonBtn" title="Exporter en JSON" class="cursor-pointer bg-slate-800 hover:bg-slate-700 active:scale-95 transition-all text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-xl border border-slate-700 flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                <span>Export</span>
+            </button>
+
+            <!-- Bouton Import JSON -->
+            <label for="jsonInput" title="Importer un JSON" class="cursor-pointer bg-slate-800 hover:bg-slate-700 active:scale-95 transition-all text-slate-300 hover:text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-xl border border-slate-700 flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                </svg>
+                <span>Import</span>
+            </label>
+            <input type="file" id="jsonInput" accept=".json,application/json" class="hidden">
+
+            <!-- Bouton Vider le Stockage -->
+            <button id="clearStorageBtn" title="Vider le stockage" class="hidden cursor-pointer bg-slate-800 hover:bg-rose-950/80 border border-slate-700 hover:border-rose-500/50 active:scale-95 transition-all text-slate-400 hover:text-rose-400 p-2 rounded-xl shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Panneau d'ajout manuel (Visible uniquement en mode édition) -->
+    <div id="addEntryPanel" class="w-full max-w-3xl hidden bg-slate-900/95 border border-amber-500/40 rounded-2xl p-4 shadow-xl mb-3 flex flex-col gap-3">
+        <div class="text-xs font-semibold text-amber-400 flex items-center justify-between">
+            <span>➕ Ajouter une nouvelle ligne</span>
+            <span class="text-[10px] text-slate-400 font-normal">Mode Édition Actif</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <input type="text" id="newSite" placeholder="Site (ex: google.com)" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-amber-500">
+            <input type="text" id="newId" placeholder="Identifiant / Email" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-amber-500">
+            <input type="text" id="newCode" placeholder="Code / Mot de passe" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-amber-500">
+        </div>
+        <button id="addRowBtn" class="w-full bg-amber-600 hover:bg-amber-500 active:scale-95 transition-all text-white text-xs font-semibold py-2 rounded-xl shadow-lg shadow-amber-500/20">
+            Enregistrer la ligne
+        </button>
+    </div>
+
+    <!-- Barre de recherche + Options -->
+    <div id="controlsBar" class="w-full max-w-3xl hidden flex-col gap-3 mb-3">
+        
+        <!-- Champ de recherche agrandi -->
+        <div class="relative w-full">
+            <svg class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Rechercher un site..." class="w-full bg-slate-900 border border-slate-800 focus:border-indigo-500 rounded-2xl pl-12 pr-10 py-4 text-base sm:text-lg text-white placeholder-slate-500 outline-none transition-colors shadow-inner">
+            <button id="clearSearch" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm px-2 py-1 rounded-lg bg-slate-800">
+                ✕
+            </button>
+        </div>
+
+        <!-- Compteur et Toggles -->
+        <div class="flex flex-wrap justify-between items-center gap-3 px-1 text-xs text-slate-400">
+            <span id="rowCount" class="font-medium text-slate-300">0 site(s)</span>
+            
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+                <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                    <input type="checkbox" id="onlyEmails" class="w-3.5 h-3.5 rounded bg-slate-800 border-slate-700 text-emerald-500 focus:ring-0">
+                    <span>Uniquement emails</span>
+                </label>
+
+                <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                    <input type="checkbox" id="expandCol3" class="w-3.5 h-3.5 rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0">
+                    <span>Déployer Code</span>
+                </label>
+
+                <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                    <input type="checkbox" id="skipHeader" checked class="w-3.5 h-3.5 rounded bg-slate-800 border-slate-700 text-indigo-500 focus:ring-0">
+                    <span>Ignorer 1ère ligne</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grille 3 Colonnes (+ Colonne suppression si mode édition actif) -->
+    <div id="gridContainer" class="w-full max-w-3xl grid grid-cols-[44px_1fr_44px] sm:grid-cols-[52px_1fr_52px] gap-2 sm:gap-3 hidden">
+        
+        <!-- En-têtes cliquables pour le tri -->
+        <div id="headerCol1" class="text-[10px] font-bold uppercase tracking-wider text-indigo-400 text-center pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-indigo-300 select-none flex items-center justify-center gap-1">
+            <span>Site</span><span id="sortIcon1" class="text-[9px]"></span>
+        </div>
+        <div id="headerCol2" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 px-1 pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-emerald-300 select-none flex items-center justify-between">
+            <span>Identifiant</span><span id="sortIcon2" class="text-[9px]"></span>
+        </div>
+        <div id="headerCol3" class="text-[10px] font-bold uppercase tracking-wider text-amber-400 px-1 pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-amber-300 select-none flex items-center justify-center gap-1">
+            <span id="col3HeaderText">Code</span><span id="sortIcon3" class="text-[9px]"></span>
+        </div>
+
+        <!-- Conteneurs de listes -->
+        <div id="col1List" class="flex flex-col gap-2"></div>
+        <div id="col2List" class="flex flex-col gap-2 min-w-0"></div>
+        <div id="col3List" class="flex flex-col gap-2 min-w-0"></div>
+
+    </div>
+
+    <!-- Message si aucun résultat -->
+    <div id="emptyState" class="hidden w-full max-w-3xl text-center py-8 text-xs text-slate-500">
+        Aucun site trouvé pour cette recherche.
+    </div>
+
+    <!-- Toast mobile centré en bas -->
+    <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-700 text-white px-4 py-2 rounded-full shadow-2xl transform translate-y-20 opacity-0 transition-all duration-200 text-xs flex items-center gap-2 z-50 whitespace-nowrap">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="toastMsg">Copié</span>
+    </div>
+
+    <footer class="mt-auto pt-8 text-[11px] text-slate-600">
+        Made by Brahim Laiche 2026 Paris
+    </footer>
+
+    <script>
+        const STORAGE_KEY_DATA = 'miftah_data_v1';
+        const STORAGE_KEY_PREFS = 'miftah_prefs_v1';
+
+        const headerBrand = document.getElementById('headerBrand');
+        const editBadge = document.getElementById('editBadge');
+        const addEntryPanel = document.getElementById('addEntryPanel');
+        const newSiteInput = document.getElementById('newSite');
+        const newIdInput = document.getElementById('newId');
+        const newCodeInput = document.getElementById('newCode');
+        const addRowBtn = document.getElementById('addRowBtn');
+
+        const csvInput = document.getElementById('csvInput');
+        const jsonInput = document.getElementById('jsonInput');
+        const exportJsonBtn = document.getElementById('exportJsonBtn');
+        const clearStorageBtn = document.getElementById('clearStorageBtn');
+        const subTitle = document.getElementById('subTitle');
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        const skipHeaderCheckbox = document.getElementById('skipHeader');
+        const expandCol3Checkbox = document.getElementById('expandCol3');
+        const onlyEmailsCheckbox = document.getElementById('onlyEmails');
+        const controlsBar = document.getElementById('controlsBar');
+        const gridContainer = document.getElementById('gridContainer');
+        const emptyState = document.getElementById('emptyState');
+        const col3HeaderText = document.getElementById('col3HeaderText');
+        const rowCountEl = document.getElementById('rowCount');
+
+        const headerCol1 = document.getElementById('headerCol1');
+        const headerCol2 = document.getElementById('headerCol2');
+        const headerCol3 = document.getElementById('headerCol3');
+        const sortIcon1 = document.getElementById('sortIcon1');
+        const sortIcon2 = document.getElementById('sortIcon2');
+        const sortIcon3 = document.getElementById('sortIcon3');
+
+        const col1List = document.getElementById('col1List');
+        const col2List = document.getElementById('col2List');
+        const col3List = document.getElementById('col3List');
+
+        let parsedData = [];
+        let currentSortColumn = null;
+        let sortDirection = 'asc';
+        let isEditMode = false;
+
+        // --- GESTION DU LONG PRESS SUR LE TITRE ---
+        let pressTimer = null;
+
+        function startLongPress(e) {
+            // Empêcher si on clique sur un bouton de la barre d'outils
+            if (e.target.closest('button') || e.target.closest('label') || e.target.closest('input')) return;
+            
+            pressTimer = setTimeout(() => {
+                toggleEditMode();
+            }, 600); // 600ms d'appui long
+        }
+
+        function cancelLongPress() {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+        }
+
+        headerBrand.addEventListener('mousedown', startLongPress);
+        headerBrand.addEventListener('mouseup', cancelLongPress);
+        headerBrand.addEventListener('mouseleave', cancelLongPress);
+
+        headerBrand.addEventListener('touchstart', startLongPress, { passive: true });
+        headerBrand.addEventListener('touchend', cancelLongPress);
+        headerBrand.addEventListener('touchmove', cancelLongPress);
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            if (isEditMode) {
+                editBadge.classList.remove('hidden');
+                addEntryPanel.classList.remove('hidden');
+                headerBrand.classList.add('border-amber-500/50');
+                showToast('Mode édition activé ✍️');
+            } else {
+                editBadge.classList.add('hidden');
+                addEntryPanel.classList.add('hidden');
+                headerBrand.classList.remove('border-amber-500/50');
+                showToast('Mode édition désactivé');
+            }
+            renderColumns();
+        }
+
+        // --- AJOUT MANUEL D'UNE LIGNE ---
+        addRowBtn.addEventListener('click', () => {
+            const site = newSiteInput.value.trim();
+            const id = newIdInput.value.trim();
+            const code = newCodeInput.value.trim();
+
+            if (!site && !id && !code) {
+                alert('Veuillez remplir au moins un champ.');
+                return;
+            }
+
+            parsedData.push([site, id, code]);
+            newSiteInput.value = '';
+            newIdInput.value = '';
+            newCodeInput.value = '';
+
+            clearStorageBtn.classList.remove('hidden');
+            saveToLocalStorage();
+            renderColumns();
+            showToast('Ligne ajoutée avec succès');
+        });
+
+        // --- SUPPRESSION D'UNE LIGNE ---
+        function deleteRow(originalIndex) {
+            if (confirm('Voulez-vous supprimer cette ligne ?')) {
+                parsedData.splice(originalIndex, 1);
+                saveToLocalStorage();
+                renderColumns();
+                showToast('Ligne supprimée');
+                if (parsedData.length === 0) {
+                    clearStorageBtn.classList.add('hidden');
+                    controlsBar.classList.add('hidden');
+                    controlsBar.classList.remove('flex');
+                    gridContainer.classList.add('hidden');
+                }
+            }
+        }
+
+        // --- SAUVEGARDE & CHARGEMENT LOCALSTORAGE ---
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(parsedData));
+                localStorage.setItem(STORAGE_KEY_PREFS, JSON.stringify({
+                    skipHeader: skipHeaderCheckbox.checked,
+                    expandCol3: expandCol3Checkbox.checked,
+                    onlyEmails: onlyEmailsCheckbox.checked,
+                    sortColumn: currentSortColumn,
+                    sortDirection: sortDirection
+                }));
+            } catch (err) {
+                console.warn('Erreur sauvegarde LocalStorage :', err);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedPrefs = localStorage.getItem(STORAGE_KEY_PREFS);
+                if (savedPrefs) {
+                    const prefs = JSON.parse(savedPrefs);
+                    if (typeof prefs.skipHeader === 'boolean') skipHeaderCheckbox.checked = prefs.skipHeader;
+                    if (typeof prefs.expandCol3 === 'boolean') expandCol3Checkbox.checked = prefs.expandCol3;
+                    if (typeof prefs.onlyEmails === 'boolean') onlyEmailsCheckbox.checked = prefs.onlyEmails;
+                    if (prefs.sortColumn !== undefined) currentSortColumn = prefs.sortColumn;
+                    if (prefs.sortDirection) sortDirection = prefs.sortDirection;
+                }
+
+                const savedData = localStorage.getItem(STORAGE_KEY_DATA);
+                if (savedData) {
+                    parsedData = JSON.parse(savedData);
+                    if (Array.isArray(parsedData) && parsedData.length > 0) {
+                        clearStorageBtn.classList.remove('hidden');
+                        subTitle.textContent = 'Données chargées en local';
+                        renderColumns();
+                    }
+                }
+            } catch (err) {
+                console.warn('Erreur lecture LocalStorage :', err);
+            }
+        }
+
+        clearStorageBtn.addEventListener('click', () => {
+            if (confirm('Supprimer toutes les données enregistrées ?')) {
+                localStorage.removeItem(STORAGE_KEY_DATA);
+                localStorage.removeItem(STORAGE_KEY_PREFS);
+                parsedData = [];
+                csvInput.value = '';
+                jsonInput.value = '';
+                searchInput.value = '';
+                currentSortColumn = null;
+                sortDirection = 'asc';
+                
+                clearStorageBtn.classList.add('hidden');
+                controlsBar.classList.add('hidden');
+                controlsBar.classList.remove('flex');
+                gridContainer.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                subTitle.textContent = 'Site • Identifiant • Code';
+                showToast('Mémoire locale vidée');
+            }
+        });
+
+        // --- IMPORT / EXPORT JSON ---
+        exportJsonBtn.addEventListener('click', () => {
+            if (parsedData.length === 0) {
+                showToast('Aucune donnée à exporter');
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(parsedData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "miftah_export.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('JSON exporté');
+        });
+
+        jsonInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const json = JSON.parse(event.target.result);
+                    if (Array.isArray(json)) {
+                        parsedData = json;
+                        searchInput.value = '';
+                        clearSearchBtn.classList.add('hidden');
+                        currentSortColumn = null;
+                        sortDirection = 'asc';
+
+                        clearStorageBtn.classList.remove('hidden');
+                        subTitle.textContent = `JSON : ${file.name}`;
+
+                        saveToLocalStorage();
+                        renderColumns();
+                        showToast('JSON importé avec succès');
+                    } else {
+                        alert('Format JSON invalide (doit être un tableau de lignes)');
+                    }
+                } catch (err) {
+                    alert('Erreur lors de la lecture du fichier JSON');
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // --- IMPORT CSV ---
+        csvInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                parsedData = parseCSV(event.target.result);
+                searchInput.value = '';
+                clearSearchBtn.classList.add('hidden');
+                currentSortColumn = null;
+                sortDirection = 'asc';
+                
+                clearStorageBtn.classList.remove('hidden');
+                subTitle.textContent = `CSV : ${file.name}`;
+                
+                saveToLocalStorage();
+                renderColumns();
+                showToast('CSV importé et sauvegardé');
+            };
+            reader.readAsText(file);
+        });
+
+        // --- ÉCOUTEURS D'OPTIONS & TRI ---
+        skipHeaderCheckbox.addEventListener('change', () => { saveToLocalStorage(); renderColumns(); });
+        expandCol3Checkbox.addEventListener('change', () => { saveToLocalStorage(); renderColumns(); });
+        onlyEmailsCheckbox.addEventListener('change', () => { saveToLocalStorage(); renderColumns(); });
+
+        headerCol1.addEventListener('click', () => handleSort(0));
+        headerCol2.addEventListener('click', () => handleSort(1));
+        headerCol3.addEventListener('click', () => handleSort(2));
+
+        function handleSort(colIndex) {
+            if (currentSortColumn === colIndex) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = colIndex;
+                sortDirection = 'asc';
+            }
+            saveToLocalStorage();
+            renderColumns();
+        }
+
+        // --- RECHERCHE ---
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() !== '') {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            renderColumns();
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            searchInput.focus();
+            renderColumns();
+        });
+
+        // --- PARSEUR CSV ---
+        function parseCSV(text) {
+            const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+            if (lines.length === 0) return [];
+
+            const firstLine = lines[0];
+            const separator = (firstLine.match(/;/g) || []).length > (firstLine.match(/,/g) || []).length ? ';' : ',';
+
+            return lines.map(line => {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === separator && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                result.push(current.trim());
+                return result;
+            });
+        }
+
+        function getFaviconUrl(urlString) {
+            try {
+                let cleanUrl = urlString.trim();
+                if (!cleanUrl) return null;
+                if (!/^https?:\/\//i.test(cleanUrl)) {
+                    cleanUrl = 'https://' + cleanUrl;
+                }
+                const urlObj = new URL(cleanUrl);
+                if (!urlObj.hostname.includes('.')) return null;
+                return {
+                    favicon: `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`,
+                    fullUrl: cleanUrl
+                };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // --- RENDU DES COLONNES ---
+        function renderColumns() {
+            col1List.innerHTML = '';
+            col2List.innerHTML = '';
+            col3List.innerHTML = '';
+
+            if (parsedData.length === 0) {
+                controlsBar.classList.add('hidden');
+                gridContainer.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                return;
+            }
+
+            controlsBar.classList.remove('hidden');
+            controlsBar.classList.add('flex');
+
+            const startIndex = skipHeaderCheckbox.checked ? 1 : 0;
+            const isCol3Expanded = expandCol3Checkbox.checked;
+            const filterOnlyEmails = onlyEmailsCheckbox.checked;
+            const query = searchInput.value.toLowerCase().trim();
+
+            // Associer chaque ligne à son index d'origine pour pouvoir la supprimer proprement
+            let indexedRows = parsedData.map((row, idx) => ({ row, idx }));
+
+            let rowsToRender = indexedRows.filter((item, index) => {
+                // Si on saute l'en-tête, on ignore l'index 0 (si startIndex == 1)
+                if (startIndex === 1 && index === 0) return false;
+
+                const siteValue = (item.row[0] || '').toLowerCase();
+                const idValue = (item.row[1] || '').trim();
+
+                if (query && !siteValue.includes(query)) return false;
+
+                if (filterOnlyEmails) {
+                    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(idValue);
+                    if (!isEmail) return false;
+                }
+
+                return true;
+            });
+
+            if (currentSortColumn !== null) {
+                rowsToRender.sort((a, b) => {
+                    const valA = (a.row[currentSortColumn] || '').toLowerCase();
+                    const valB = (b.row[currentSortColumn] || '').toLowerCase();
+                    
+                    if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+                    if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            }
+
+            sortIcon1.textContent = currentSortColumn === 0 ? (sortDirection === 'asc' ? '▲' : '▼') : '';
+            sortIcon2.textContent = currentSortColumn === 1 ? (sortDirection === 'asc' ? '▲' : '▼') : '';
+            sortIcon3.textContent = currentSortColumn === 2 ? (sortDirection === 'asc' ? '▲' : '▼') : '';
+
+            rowCountEl.textContent = `${rowsToRender.length} site(s)`;
+
+            if (rowsToRender.length === 0) {
+                gridContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // Ajustement dynamique de la grille si le mode édition ajoute une colonne de suppression à gauche
+            if (isEditMode) {
+                if (isCol3Expanded) {
+                    gridContainer.className = 'w-full max-w-3xl grid grid-cols-[32px_44px_1fr_1fr] sm:grid-cols-[36px_52px_1fr_1fr] gap-1.5 sm:gap-2.5';
+                } else {
+                    gridContainer.className = 'w-full max-w-3xl grid grid-cols-[32px_44px_1fr_44px] sm:grid-cols-[36px_52px_1fr_52px] gap-1.5 sm:gap-2.5';
+                }
+            } else {
+                if (isCol3Expanded) {
+                    gridContainer.className = 'w-full max-w-3xl grid grid-cols-[44px_1fr_1fr] sm:grid-cols-[52px_1fr_52px] gap-2 sm:gap-3';
+                } else {
+                    gridContainer.className = 'w-full max-w-3xl grid grid-cols-[44px_1fr_44px] sm:grid-cols-[52px_1fr_52px] gap-2 sm:gap-3';
+                }
+            }
+
+            // Gestion des en-têtes selon le mode édition
+            if (isEditMode) {
+                headerCol3.className = isCol3Expanded 
+                    ? 'text-[10px] font-bold uppercase tracking-wider text-amber-400 px-1 pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-amber-300 select-none flex items-center justify-between col-start-4'
+                    : 'text-[10px] font-bold uppercase tracking-wider text-amber-400 text-center pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-amber-300 select-none flex items-center justify-center gap-1 col-start-4';
+                col3HeaderText.textContent = 'Code';
+            } else {
+                headerCol3.className = isCol3Expanded
+                    ? 'text-[10px] font-bold uppercase tracking-wider text-amber-400 px-1 pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-amber-300 select-none flex items-center justify-between'
+                    : 'text-[10px] font-bold uppercase tracking-wider text-amber-400 text-center pb-1 border-b border-slate-800 truncate cursor-pointer hover:text-amber-300 select-none flex items-center justify-center gap-1';
+                col3HeaderText.textContent = 'Code';
+            }
+
+            rowsToRender.forEach((item) => {
+                const rawSite = item.row[0] || '';
+                const rawId = item.row[1] || '';
+                const rawCode = item.row[2] || '';
+                const origIdx = item.idx;
+
+                // Si mode édition, insérer un bouton poubelle dans la 1ère colonne (ou un conteneur dédié)
+                if (isEditMode) {
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'w-8 h-11 sm:w-9 sm:h-[52px] flex items-center justify-center rounded-xl bg-rose-950/50 hover:bg-rose-900 border border-rose-900/50 text-rose-400 active:scale-95 transition-all shrink-0';
+                    delBtn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`;
+                    delBtn.title = "Supprimer cette ligne";
+                    delBtn.onclick = () => deleteRow(origIdx);
+                    col1List.appendChild(delBtn);
+                }
+
+                // --- 1ÈRE COLONNE : Site ---
+                const btn1 = document.createElement('button');
+                btn1.className = 'w-11 h-11 sm:w-[52px] sm:h-[52px] aspect-square flex items-center justify-center p-2 rounded-xl bg-slate-900 active:bg-indigo-600/30 border border-slate-800 active:border-indigo-500 transition-all active:scale-90 shrink-0';
+                
+                const linkInfo = getFaviconUrl(rawSite);
+                const isImage = /\.(jpeg|jpg|gif|png|svg|webp)$/i.test(rawSite);
+
+                if (linkInfo) {
+                    btn1.innerHTML = `<img src="${linkInfo.favicon}" alt="site" class="w-6 h-6 object-contain rounded-sm" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23818cf8%22><circle cx=%2212%22 cy=%2212%22 r=%228%22/></svg>'">`;
+                    btn1.title = linkInfo.fullUrl;
+                    btn1.onclick = () => window.open(linkInfo.fullUrl, '_blank');
+                } else if (isImage) {
+                    btn1.innerHTML = `<img src="${rawSite}" alt="site" class="w-6 h-6 object-contain rounded-sm">`;
+                    btn1.onclick = () => window.open(rawSite, '_blank');
+                } else {
+                    btn1.innerHTML = `<span class="text-sm opacity-60">🌐</span>`;
+                    btn1.title = rawSite;
+                    btn1.onclick = () => copyToClipboard(rawSite, 'Site copié');
+                }
+                col1List.appendChild(btn1);
+
+                // --- 2ÈME COLONNE : Identifiant ---
+                const btn2 = document.createElement('button');
+                btn2.className = 'w-full h-11 sm:h-[52px] px-2.5 rounded-xl bg-slate-900 active:bg-emerald-600/30 border border-slate-800 active:border-emerald-500 transition-all active:scale-95 text-left text-xs sm:text-sm text-slate-200 truncate flex items-center';
+                btn2.textContent = rawId || '—';
+                btn2.onclick = () => copyToClipboard(rawId, 'Identifiant copié');
+                col2List.appendChild(btn2);
+
+                // --- 3ÈME COLONNE : Code ---
+                const btn3 = document.createElement('button');
+                if (isCol3Expanded) {
+                    btn3.className = 'w-full h-11 sm:h-[52px] px-2.5 rounded-xl bg-slate-900 active:bg-amber-600/30 border border-slate-800 active:border-amber-500 transition-all active:scale-95 text-left text-xs sm:text-sm font-mono text-amber-200 truncate flex items-center';
+                    btn3.textContent = rawCode || '—';
+                } else {
+                    btn3.className = 'w-11 h-11 sm:w-[52px] sm:h-[52px] aspect-square flex items-center justify-center rounded-xl bg-slate-900 active:bg-amber-600/30 border border-slate-800 active:border-amber-500 transition-all active:scale-90 shrink-0 text-amber-400/80';
+                    btn3.innerHTML = rawCode 
+                        ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`
+                        : `<span class="text-xs text-slate-600">—</span>`;
+                }
+                btn3.onclick = () => copyToClipboard(rawCode, 'Code copié');
+                col3List.appendChild(btn3);
+            });
+        }
+
+        function copyToClipboard(text, label = 'Copié') {
+            if (!text) return;
+            navigator.clipboard.writeText(text);
+            showToast(label);
+        }
+
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 1600);
+        }
+
+        window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+    </script>
+<script>
+if ('serviceWorker' in navigator) {
+window.addEventListener('load',()=>{
+navigator.serviceWorker.register('./sw.js').catch(err=>console.error(err));
+});
+}
+</script>
+</body>
+</html>
